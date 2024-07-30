@@ -1,4 +1,5 @@
 from fractions import Fraction
+from typing import Dict
 from tyr.planners.model.apptainer_planner import ApptainerPlanner
 
 
@@ -14,6 +15,12 @@ class PopcornPlanner(ApptainerPlanner):
 
     def _get_engine_epsilon(self) -> Fraction:
         return Fraction(1, 1000)
+
+    def _get_write_domain_options(self) -> Dict[str, bool]:
+        opts = super()._get_write_domain_options()
+        opts["control_support"] = True
+        opts["force_predicate"] = True
+        return opts
 
     def _starting_plan_str(self) -> str:
         return "; Cost"
